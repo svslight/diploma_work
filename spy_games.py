@@ -60,6 +60,19 @@ class SpyGames:
         with open(filename, 'w', encoding='utf8') as file:
             json.dump(data, file, indent=2, ensure_ascii=False)
 
+
+class GroupsInfo:
+
+    def __init__(self, group):
+        self.group = group
+
+    def group_object_factory(self, group):
+        return {
+            'name': group['name'],
+            'gid': group['id'],
+            'members_count': group['members_count'],
+        }
+
 def main():
     result_file_name = 'groups.json'
     enter_value = input('\nВведите имя (eshmargunov) или id (171691064) пользователя, для выхода - введите q: ')
@@ -129,8 +142,8 @@ def main():
             # spy_games.write_json(unique_groups_info, 'unique_groups_info.json')
 
             for group in unique_groups_info:
-                format_group_info = {'name': group['name'], 'id': group['id'], 'members_count': group['members_count']}
-                # format_group_info = group_object_factory(group)
+                groups_info = GroupsInfo(group)
+                format_group_info = groups_info.group_object_factory(group)
                 result.append(format_group_info)
 
         for i, result_list in enumerate(result, 1):
